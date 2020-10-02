@@ -1,6 +1,7 @@
 var express = require("express");
 var exphbs = require("express-handlebars");
 var mysql = require("mysql");
+require('dotenv').config();
 
 var app = express();
 
