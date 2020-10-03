@@ -3,22 +3,23 @@
 
 
 <ul>
-  {{#each cats}}
-    {{#unless sleepy}}
-      {{> cats/cat-block sleep=true}}
-    {{/unless}}
+  {{#each burgers}}
+    <li>
+      <p>ID: {{this.id}}</p>
+      <p>Burger: {{this.burger_name}}</p>
+    </li>
   {{/each}}
 </ul>
 
 
 
-<ul>
-  {{#each cats}}
+{{!-- <ul>
+  {{#each burgers}}
     {{#if sleepy}}
       {{> cats/cat-block sleep=false}}
     {{/if}}
   {{/each}}
-</ul>
+</ul> --}}
 
 
 <form class="create-form">
@@ -35,4 +36,6 @@
   </div>
 
   <button type="submit">Submit</button>
+<button type="submit">Submit</button>
+<button type="submit">Submit</button>
 </form>

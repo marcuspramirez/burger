@@ -3,6 +3,15 @@ var exphbs = require("express-handlebars");
 var mysql = require("mysql");
 require('dotenv').config();
 
+var connection = mysql.createConnection({
+  host: "localhost",
+  port: 3306,
+  user: "root",
+  password: process.env.dbPass,
+  database: process.env.dbName
+});
+
+
 var app = express();
 
 // Set the port of our application
@@ -18,7 +27,17 @@ app.set("view engine", "handlebars");
 
 
 app.get('/', function(req, res){
-  res.render("index");
+  connection.query("SELECT * FROM burgers;", function(err, burgers) {
+    if (err) throw err;
+
+    // Test it
+    // console.log('The solution is: ', data);
+
+    // Test it
+    // return res.send(data);
+
+    res.render("index", {burgers});
+  });
 })
 
 
