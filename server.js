@@ -2,7 +2,11 @@ var express = require("express");
 var exphbs = require("express-handlebars");
 var mysql = require("mysql");
 require('dotenv').config();
+var connection;
 
+if (process.env.JAWSDB_URL){
+  connection = mysql.createConnection(process.env.JAWSDB_URL);
+}else{
 var connection = mysql.createConnection({
   host: "localhost",
   port: 3306,
@@ -10,6 +14,7 @@ var connection = mysql.createConnection({
   password: process.env.dbPass,
   database: process.env.dbName
 });
+};
 
 
 var app = express();
@@ -33,6 +38,15 @@ app.get('/', function(req, res){
     res.render("index", {burgers});
   });
 })
+
+app.post("/", function(req, res) {
+  
+  connection.query("INSERT INTO burgers (name) VALUES (?)", [req.body.burger_name], function(err, result) {
+    if (err) throw err;
+
+    res.send("Great Job");
+  });
+});
 
 
 
