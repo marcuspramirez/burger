@@ -31,22 +31,30 @@ app.use(express.static('public'));
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
+// Import routes and give the server access to them.
+var routes = require("./controllers/burgers_controller.js");
+
+app.use(routes);
+
+
 //Render information to the index.handlebars page
-app.get('/', function(req, res){
-  connection.query("SELECT * FROM burgers;", function(err, burgers) {
-    if (err) throw err;
-    res.render("index", {burgers});
-  });
-})
+// app.get('/', function(req, res){
+//   connection.query("SELECT * FROM burgers;", function(err, burgers) {
+//     if (err) throw err;
+//     res.render("index", {burgers});
+//   });
+// })
 
-app.post("/", function(req, res) {
+// app.post("/", function(req, res) {
   
-  connection.query("INSERT INTO burgers (name) VALUES (?)", [req.body.burger_name], function(err, result) {
-    if (err) throw err;
+//   connection.query("INSERT INTO burgers (burger_name) VALUES (?)", [req.body.burger_name], function(err, result) {
+//     if (err) throw err;
 
-    res.send("Great Job");
-  });
-});
+//     res.send("Great Job");
+//   });
+// });
+
+
 
 
 
