@@ -21,21 +21,15 @@ var PORT = process.env.PORT || 8080;
 // Sets up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(express.static('public'));
 
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
-
+//Render information to the index.handlebars page
 app.get('/', function(req, res){
   connection.query("SELECT * FROM burgers;", function(err, burgers) {
     if (err) throw err;
-
-    // Test it
-    // console.log('The solution is: ', data);
-
-    // Test it
-    // return res.send(data);
-
     res.render("index", {burgers});
   });
 })
