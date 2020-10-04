@@ -1,20 +1,22 @@
+require('dotenv').config();
 var express = require("express");
 var exphbs = require("express-handlebars");
 var mysql = require("mysql");
-require('dotenv').config();
 var connection;
+var path = require('path');
+var morgan = require('morgan')
 
-if (process.env.JAWSDB_URL){
-  connection = mysql.createConnection(process.env.JAWSDB_URL);
-}else{
-var connection = mysql.createConnection({
-  host: "localhost",
-  port: 3306,
-  user: "root",
-  password: process.env.dbPass,
-  database: process.env.dbName
-});
-};
+// if (process.env.JAWSDB_URL){
+//   connection = mysql.createConnection(process.env.JAWSDB_URL);
+// }else{
+// var connection = mysql.createConnection({
+//   host: "localhost",
+//   port: 3306,
+//   user: "root",
+//   password: process.env.dbPass,
+//   database: process.env.dbName
+// });
+// };
 
 
 var app = express();
@@ -23,10 +25,12 @@ var app = express();
 // process.env.PORT lets the port be set by Heroku
 var PORT = process.env.PORT || 8080;
 
+app.use(morgan('dev'));
+
 // Sets up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
